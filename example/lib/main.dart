@@ -6,6 +6,7 @@ import 'package:example/ume_switch.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ume/flutter_ume.dart';
+import 'package:flutter_ume_kit_env/flutter_ume_kit_env.dart';
 import 'package:flutter_ume_kit_ui/flutter_ume_kit_ui.dart';
 import 'package:flutter_ume_kit_perf/flutter_ume_kit_perf.dart';
 import 'package:flutter_ume_kit_show_code/flutter_ume_kit_show_code.dart';
@@ -37,6 +38,37 @@ class _UMEAppState extends State<UMEApp> {
     });
     if (kDebugMode) {
       PluginManager.instance
+        ..register(EnvSwitcher(
+          envConfigs: [
+            EnvConfig(
+              filename: 'prod',
+              entries: {
+                'CURRENT_ENV': 'prod',
+                'API_URL': 'https://api.prod.com',
+                'APP_NAME': 'My App (Production)',
+              },
+            ),
+            EnvConfig(
+              filename: 'staging',
+              entries: {
+                'CURRENT_ENV': 'staging',
+                'API_URL': 'https://api.staging.com',
+                'APP_NAME': 'My App (Staging)',
+              },
+            ),
+            EnvConfig(
+              filename: 'dev',
+              entries: {
+                'CURRENT_ENV': 'dev',
+                'API_URL': 'https://api.dev.com',
+                'APP_NAME': 'My App (Development)',
+              },
+            ),
+          ],
+          onChangeEnv: (String envName) {
+            debugPrint('Switch to $envName');
+          },
+        ))
         ..register(WidgetInfoInspector())
         ..register(WidgetDetailInspector())
         ..register(ColorSucker())

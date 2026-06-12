@@ -20,6 +20,8 @@ dependencies:
   flutter_ume_kit_device: 0.2.1
   flutter_ume_kit_console: 0.2.1
   flutter_ume_kit_dio: 0.2.0
+  flutter_ume_kit_env:
+    path: ../kits/flutter_ume_kit_env
 
 dependency_overrides:
   vm_service: ^9.4.0
