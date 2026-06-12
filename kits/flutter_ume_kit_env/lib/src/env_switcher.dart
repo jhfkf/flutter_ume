@@ -111,7 +111,7 @@ class _EnvSwitcherState extends State<EnvSwitcher> with WidgetsBindingObserver {
                       ),
                     ),
                     ElevatedButton(
-                        child: const Text("确认切换（自动退出应用）"),
+                        child: const Text("确认切换"),
                         style: ButtonStyle(
                           backgroundColor: WidgetStateProperty.all(
                               widget.currentFilename == tmpEnv
