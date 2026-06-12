@@ -1,13 +1,15 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:platform/platform.dart';
+import 'package:platform_info/platform_info.dart';
 import 'package:flutter_ume/flutter_ume.dart';
 import 'icon.dart' as icon;
 
 class DeviceInfoPanel extends StatefulWidget implements Pluggable {
-  final Platform platform;
+  DeviceInfoPanel({Key? key, Platform? platform})
+      : platform = platform ?? Platform.instance,
+        super(key: key);
 
-  const DeviceInfoPanel({this.platform = const LocalPlatform()});
+  final Platform platform;
 
   @override
   _DeviceInfoPanelState createState() => _DeviceInfoPanelState();
@@ -40,12 +42,16 @@ class _DeviceInfoPanelState extends State<DeviceInfoPanel> {
   void _getDeviceInfo() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     Map dataMap = Map();
-    if (widget.platform.isAndroid) {
+    if (widget.platform.android) {
       AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
       dataMap = _readAndroidBuildData(androidDeviceInfo);
-    } else if (widget.platform.isIOS) {
+    } else if (widget.platform.iOS) {
       IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
       dataMap = _readIosDeviceInfo(iosDeviceInfo);
+    } else if (widget.platform.ohos) {
+      final ohosInfo = await (deviceInfo as dynamic).ohosDeviceInfo;
+      dataMap = _readOhosDeviceInfo(
+          Map<String, dynamic>.from(ohosInfo.toJson()));
     }
     StringBuffer buffer = StringBuffer();
     dataMap.forEach((k, v) {
@@ -100,6 +106,35 @@ class _DeviceInfoPanelState extends State<DeviceInfoPanel> {
       'utsname.release': data.utsname.release,
       'utsname.version': data.utsname.version,
       'utsname.machine': data.utsname.machine,
+    };
+  }
+
+  Map<String, dynamic> _readOhosDeviceInfo(Map<String, dynamic> data) {
+    return <String, dynamic>{
+      'deviceType': data['deviceType'],
+      'manufacture': data['manufacture'],
+      'brand': data['brand'],
+      'marketName': data['marketName'],
+      'productSeries': data['productSeries'],
+      'productModel': data['productModel'],
+      'softwareModel': data['softwareModel'],
+      'hardwareModel': data['hardwareModel'],
+      'bootloaderVersion': data['bootloaderVersion'],
+      'abiList': data['abiList'],
+      'securityPatchTag': data['securityPatchTag'],
+      'displayVersion': data['displayVersion'],
+      'incrementalVersion': data['incrementalVersion'],
+      'osFullName': data['osFullName'],
+      'osReleaseType': data['osReleaseType'],
+      'sdkApiVersion': data['sdkApiVersion'],
+      'firstApiVersion': data['firstApiVersion'],
+      'versionId': data['versionId'],
+      'buildType': data['buildType'],
+      'distributionOSName': data['distributionOSName'],
+      'distributionOSVersion': data['distributionOSVersion'],
+      'distributionOSApiVersion': data['distributionOSApiVersion'],
+      'distributionOSReleaseType': data['distributionOSReleaseType'],
+      'isPhysicalDevice': data['isPhysicalDevice'],
     };
   }
 

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:system_info/system_info.dart';
+import 'package:platform_info/platform_info.dart';
+import 'package:system_info2/system_info2.dart';
 import 'package:flutter_ume/flutter_ume.dart';
 import 'icon.dart' as icon;
-import 'package:platform/platform.dart';
 
 class CpuInfoPage extends StatefulWidget implements Pluggable {
-  CpuInfoPage({Key? key, this.child, this.platform = const LocalPlatform()})
-      : super(key: key);
+  CpuInfoPage({Key? key, this.child, Platform? platform})
+      : platform = platform ?? Platform.instance,
+        super(key: key);
 
   final Platform platform;
 
@@ -36,13 +37,14 @@ class _CpuInfoPageState extends State<CpuInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.platform.isAndroid)
+    if (!(widget.platform.android || widget.platform.ohos)) {
       return Container(
         color: Colors.white,
         child: Center(
           child: Text('Only available on Android device'),
         ),
       );
+    }
     return Container(
       color: Colors.white,
       child: SafeArea(
@@ -60,7 +62,7 @@ class _CpuInfoPageState extends State<CpuInfoPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.platform.isAndroid) _setupData();
+    if (widget.platform.android || widget.platform.ohos) _setupData();
   }
 
   _setupData() {
@@ -68,7 +70,7 @@ class _CpuInfoPageState extends State<CpuInfoPage> {
     final deviceInfo = <Map<String, String>>[];
     deviceInfo.addAll([
       {'Kernel architecture': '${SysInfo.kernelArchitecture}'},
-      {'Kernel bitness': '${SysInfo.kernelBitness}'},
+      // {'Kernel bitness': '${SysInfo.kernelBitness}'},
       {'Kernel name': '${SysInfo.kernelName}'},
       {'Kernel version': '${SysInfo.kernelVersion}'},
       {'Operating system name': '${SysInfo.operatingSystemName}'},
@@ -99,7 +101,7 @@ class _CpuInfoPageState extends State<CpuInfoPage> {
       },
     ]);
 
-    final processors = SysInfo.processors;
+    final processors = SysInfo.cores;
     deviceInfo.add(
       {'Number of processors': '${processors.length}'},
     );

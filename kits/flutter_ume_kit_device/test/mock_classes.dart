@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:mockito/mockito.dart';
-import 'package:platform/platform.dart';
+import 'package:platform_info/platform_info.dart';
 
 class MockAndroidPlatform extends Mock implements Platform {
   @override

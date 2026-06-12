@@ -13,7 +13,12 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  shared_preferences: ^2.0.15
+  # shared_preferences: ^2.0.15
+  shared_preferences:
+    git:
+      url: "https://gitcode.com/openharmony-tpc/flutter_packages.git"
+      path: "packages/shared_preferences/shared_preferences"
+      ref: "br_shared_preferences-v2.5.4_ohos"
   vm_service: ">=9.4.0 <12.0.0"
   tuple: ^2.0.0
 

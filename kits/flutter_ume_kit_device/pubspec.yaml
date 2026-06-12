@@ -11,9 +11,10 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_ume: ">=1.0.0 <2.0.0"
-  system_info: ^1.0.1
+  system_info2: any
   device_info_plus: any
-  platform: ^3.0.0
+  # platform: ^3.0.0
+  platform_info: any
 
 dev_dependencies:
   flutter_test:

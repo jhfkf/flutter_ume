@@ -5,7 +5,7 @@ import 'package:rxdart/rxdart.dart';
 
 class _ChannelStore {
   final BehaviorSubject<List<String>> _orderedChannelNamePublisher =
-      BehaviorSubject();
+      BehaviorSubject.seeded([]);
 
   final Map<String, List<ChannelInfoModel>> _orderedChannelEvents = {};
 
