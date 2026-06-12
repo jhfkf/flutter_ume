@@ -3,7 +3,7 @@ import 'package:flutter_ume/flutter_ume.dart';
 import 'package:flutter_ume_kit_show_code/show_code/page_info_helper.dart';
 import 'package:flutter_ume_kit_show_code/show_code/syntax_highlighter.dart';
 import 'package:flutter_ume_kit_show_code/show_code/icon.dart' as icon;
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ShowCode extends StatefulWidget implements Pluggable {
   const ShowCode({Key? key}) : super(key: key);
@@ -171,7 +171,7 @@ class ShowCodeState extends State<ShowCode> with WidgetsBindingObserver {
                         pageInfoHelper
                             .getCodeListByKeyword(value)
                             .then((codeList) {
-                          if (codeList != null && codeList.isNotEmpty) {
+                          if (codeList.isNotEmpty) {
                             showCodeList = true;
                             _codeList = codeList;
                           } else {
@@ -219,6 +219,6 @@ class ShowCodeState extends State<ShowCode> with WidgetsBindingObserver {
     if (code == null || code!.isEmpty) {
       return;
     }
-    return Share.share(code!);
+    await SharePlus.instance.share(ShareParams(text: code!));
   }
 }

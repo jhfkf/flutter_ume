@@ -4,7 +4,8 @@ version: 1.0.1
 publish_to: none
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -45,6 +46,6 @@ dev_dependencies:
     path: ../kits/flutter_ume_kit_dio
   flutter_ume_kit_channel_monitor:
     path: ../kits/flutter_ume_kit_channel_monitor
-  
+
 flutter:
   uses-material-design: true

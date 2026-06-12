@@ -75,17 +75,19 @@ class _UMEAppState extends State<UMEApp> {
   @override
   Widget build(BuildContext context) {
     final Widget body = _buildApp(context);
-    if (kDebugMode) {
-      return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => UMESwitch()),
-        ],
-        builder: (BuildContext context, _) => UMEWidget(
-          enable: context.watch<UMESwitch>().enable,
-          child: body,
-        ),
-      );
-    }
-    return body;
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UMESwitch()),
+      ],
+      builder: (BuildContext context, _) {
+        if (kDebugMode) {
+          return UMEWidget(
+            enable: context.watch<UMESwitch>().enable,
+            child: body,
+          );
+        }
+        return body;
+      },
+    );
   }
 }

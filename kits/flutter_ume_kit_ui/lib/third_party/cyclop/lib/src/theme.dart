@@ -17,8 +17,10 @@ const defaultBorderRadius = BorderRadius.all(Radius.circular(defaultRadius));
 
 final lightTheme = ThemeData.light().copyWith(
   scaffoldBackgroundColor: const Color(0xfff0f0f0),
-  backgroundColor: const Color(0xffdadada),
-  toggleableActiveColor: Colors.cyan,
+  colorScheme: ThemeData.light().colorScheme.copyWith(
+    secondary: Colors.cyan,
+    surface: const Color(0xffdadada),
+  ),
   inputDecorationTheme: ThemeData.light().inputDecorationTheme.copyWith(
         isDense: true,
         fillColor: Colors.white,
@@ -36,8 +38,10 @@ final lightTheme = ThemeData.light().copyWith(
 );
 
 final darkTheme = ThemeData.dark().copyWith(
-  backgroundColor: Colors.grey.shade700,
-  toggleableActiveColor: Colors.cyan,
+  colorScheme: ThemeData.dark().colorScheme.copyWith(
+    secondary: Colors.cyan,
+    surface: Colors.grey.shade700,
+  ),
   textSelectionTheme: ThemeData.light()
       .textSelectionTheme
       .copyWith(selectionColor: Colors.cyan.shade700),
