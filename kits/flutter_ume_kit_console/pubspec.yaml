@@ -14,7 +14,7 @@ dependencies:
   # share: ^2.0.4
   share_plus: any
   shared_preferences: any
-  flutter_ume: ">=1.0.0 <2.0.0"
+  flutter_ume: any
 
 dev_dependencies:
   flutter_test:

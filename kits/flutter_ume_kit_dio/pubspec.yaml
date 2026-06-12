@@ -10,9 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_ume: ">=1.0.0 <2.0.0"
+  flutter_ume: any
 
-  dio: ^4.0.0
+  dio: any
 
 dev_dependencies:
   flutter_test:
