@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_ume: ^1.0.1
+  flutter_ume: any
   rxdart: ^0.27.3
 
 dev_dependencies:
