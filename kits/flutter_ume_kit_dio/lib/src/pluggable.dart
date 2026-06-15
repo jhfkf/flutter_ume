@@ -11,14 +11,29 @@ import 'models/http_interceptor.dart';
 import 'widgets/icon.dart' as icon;
 import 'widgets/pluggable_state.dart';
 
+/// Configuration for a single Dio instance with an associated tag.
+///
+/// The [tag] will be displayed in the request list to help identify
+/// which Dio instance a request originated from.
+class DioConfig {
+  const DioConfig({required this.dio, required this.tag});
+  final Dio dio;
+  final String tag;
+}
+
 // TODO(Alex): Implement [PluggableStream] for dot features.
 /// Implement a [Pluggable] to integrate with UME.
+///
+/// Pass multiple [DioConfig] instances to monitor requests from
+/// different Dio instances, each identified by its [DioConfig.tag].
 class DioInspector extends StatefulWidget implements Pluggable {
-  DioInspector({Key? key, required this.dio}) : super(key: key) {
-    dio.interceptors.add(UMEDioInterceptor());
+  DioInspector({Key? key, required this.configs}) : super(key: key) {
+    for (final config in configs) {
+      config.dio.interceptors.add(UMEDioInterceptor(tag: config.tag));
+    }
   }
 
-  final Dio dio;
+  final List<DioConfig> configs;
 
   @override
   DioPluggableState createState() => DioPluggableState();

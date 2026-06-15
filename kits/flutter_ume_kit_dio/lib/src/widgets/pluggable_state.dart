@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
+import '../constants/constants.dart';
 import '../constants/extensions.dart';
 import '../instances.dart';
 import '../pluggable.dart';
@@ -223,6 +224,10 @@ class _ResponseCardState extends State<_ResponseCard> {
     return Colors.blueAccent;
   }
 
+  /// The tag associated with the Dio instance that made this request.
+  String get _tag =>
+      _response.requestOptions.extra[DIO_EXTRA_TAG] as String? ?? '';
+
   /// The method that the [_request] used.
   String get _method => _request.method;
 
@@ -284,6 +289,23 @@ class _ResponseCardState extends State<_ResponseCard> {
   Widget _infoContent(BuildContext context) {
     return Row(
       children: <Widget>[
+        if (_tag.isNotEmpty) ...[
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 4,
+              vertical: 1,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(3),
+              color: Colors.blueGrey,
+            ),
+            child: Text(
+              _tag,
+              style: const TextStyle(color: Colors.white, fontSize: 11),
+            ),
+          ),
+          const SizedBox(width: 6),
+        ],
         Text(_startTime.hms()),
         const SizedBox(width: 6),
         Container(

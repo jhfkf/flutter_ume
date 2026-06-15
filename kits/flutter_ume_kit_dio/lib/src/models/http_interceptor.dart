@@ -17,9 +17,15 @@ int get _timestamp => DateTime.now().millisecondsSinceEpoch;
 ///  - Add [DIO_EXTRA_END_TIME] when a response is respond or thrown an error.
 ///  - Deliver the [Response] to the container.
 class UMEDioInterceptor extends Interceptor {
+  UMEDioInterceptor({this.tag = ''});
+
+  /// The tag associated with the Dio instance this interceptor belongs to.
+  final String tag;
+
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     options.extra[DIO_EXTRA_START_TIME] = _timestamp;
+    options.extra[DIO_EXTRA_TAG] = tag;
     handler.next(options);
   }
 

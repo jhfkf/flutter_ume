@@ -17,6 +17,7 @@ import 'package:flutter_ume_kit_dio/flutter_ume_kit_dio.dart';
 import 'package:flutter_ume_kit_channel_monitor/flutter_ume_kit_channel_monitor.dart';
 
 final Dio dio = Dio()..options = BaseOptions(connectTimeout: 10000);
+final DioConfig dioConfig = DioConfig(dio: dio, tag: 'Default');
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -81,7 +82,7 @@ class _UMEAppState extends State<UMEApp> {
         ..register(CpuInfoPage())
         ..register(DeviceInfoPanel())
         ..register(Console())
-        ..register(DioInspector(dio: dio))
+        ..register(DioInspector(configs: [dioConfig]))
         ..register(CustomRouterPluggable())
         ..register(ChannelPlugin());
     }

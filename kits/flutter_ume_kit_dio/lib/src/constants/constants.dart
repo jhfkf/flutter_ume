@@ -4,3 +4,4 @@
 ///
 const String DIO_EXTRA_START_TIME = 'ume_start_time';
 const String DIO_EXTRA_END_TIME = 'ume_end_time';
+const String DIO_EXTRA_TAG = 'ume_tag';

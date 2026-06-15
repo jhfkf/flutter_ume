@@ -12,11 +12,12 @@ import 'package:flutter_ume_kit_dio/flutter_ume_kit_dio.dart';
 import 'mock_classes.dart';
 
 final Dio _dio = Dio();
+final DioConfig _config = DioConfig(dio: _dio, tag: 'test');
 
 void main() {
   group('ConsolePanel', () {
     test('Pluggable', () {
-      final DioInspector pluggable = DioInspector(dio: _dio);
+      final DioInspector pluggable = DioInspector(configs: [_config]);
       final Widget widget = pluggable.buildWidget(MockContext());
       final String name = pluggable.name;
       final VoidCallback onTrigger = pluggable.onTrigger..call();
@@ -29,7 +30,7 @@ void main() {
     });
 
     testWidgets('DioInspector pump widget', (tester) async {
-      final DioInspector inspector = DioInspector(dio: _dio);
+      final DioInspector inspector = DioInspector(configs: [_config]);
       await tester.pumpWidget(
         MaterialApp(key: rootKey, home: Scaffold(body: inspector)),
       );
