@@ -42,3 +42,4 @@ scripts:
         - ios
       scope:
         - 'example'
+sdkPath: .fvm/flutter_sdk

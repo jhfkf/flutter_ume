@@ -37,7 +37,7 @@ class _CpuInfoPageState extends State<CpuInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!(widget.platform.android || widget.platform.ohos)) {
+    if (!(widget.platform.android)) {
       return Container(
         color: Colors.white,
         child: Center(
@@ -62,7 +62,7 @@ class _CpuInfoPageState extends State<CpuInfoPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.platform.android || widget.platform.ohos) _setupData();
+    if (widget.platform.android) _setupData();
   }
 
   _setupData() {

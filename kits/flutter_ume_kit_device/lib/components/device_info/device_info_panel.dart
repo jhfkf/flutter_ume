@@ -48,10 +48,6 @@ class _DeviceInfoPanelState extends State<DeviceInfoPanel> {
     } else if (widget.platform.iOS) {
       IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
       dataMap = _readIosDeviceInfo(iosDeviceInfo);
-    } else if (widget.platform.ohos) {
-      final ohosInfo = await (deviceInfo as dynamic).ohosDeviceInfo;
-      dataMap = _readOhosDeviceInfo(
-          Map<String, dynamic>.from(ohosInfo.toJson()));
     }
     StringBuffer buffer = StringBuffer();
     dataMap.forEach((k, v) {
@@ -108,36 +104,6 @@ class _DeviceInfoPanelState extends State<DeviceInfoPanel> {
       'utsname.machine': data.utsname.machine,
     };
   }
-
-  Map<String, dynamic> _readOhosDeviceInfo(Map<String, dynamic> data) {
-    return <String, dynamic>{
-      'deviceType': data['deviceType'],
-      'manufacture': data['manufacture'],
-      'brand': data['brand'],
-      'marketName': data['marketName'],
-      'productSeries': data['productSeries'],
-      'productModel': data['productModel'],
-      'softwareModel': data['softwareModel'],
-      'hardwareModel': data['hardwareModel'],
-      'bootloaderVersion': data['bootloaderVersion'],
-      'abiList': data['abiList'],
-      'securityPatchTag': data['securityPatchTag'],
-      'displayVersion': data['displayVersion'],
-      'incrementalVersion': data['incrementalVersion'],
-      'osFullName': data['osFullName'],
-      'osReleaseType': data['osReleaseType'],
-      'sdkApiVersion': data['sdkApiVersion'],
-      'firstApiVersion': data['firstApiVersion'],
-      'versionId': data['versionId'],
-      'buildType': data['buildType'],
-      'distributionOSName': data['distributionOSName'],
-      'distributionOSVersion': data['distributionOSVersion'],
-      'distributionOSApiVersion': data['distributionOSApiVersion'],
-      'distributionOSReleaseType': data['distributionOSReleaseType'],
-      'isPhysicalDevice': data['isPhysicalDevice'],
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -3,16 +3,8 @@ dependency_overrides:
   flutter_ume:
     path: ../..
 
-  platform_info:
-    git:
-      url: https://gitcode.com/CPF-Flutter/fluttertpc_platform_info
+  platform_info: any  
 
-  system_info2:
-    git:
-      url: https://gitcode.com/CPF-Flutter/fluttertpc_system_info2
+  system_info2: any
 
-  device_info_plus:
-    git:
-      url: "https://gitcode.com/openharmony-sig/flutter_plus_plugins.git"
-      path: "packages/device_info_plus/device_info_plus"
-      ref: "br_device_info_plus-v11.1.0_ohos"
+  device_info_plus: any
