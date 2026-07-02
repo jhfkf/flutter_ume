@@ -84,7 +84,27 @@ class _UMEAppState extends State<UMEApp> {
         ..register(CpuInfoPage())
         ..register(DeviceInfoPanel())
         ..register(Console())
-        ..register(DioInspector(configs: [dioConfig]))
+        ..register(DioInspector(
+          configs: [dioConfig],
+          actions: [
+            DioAction(
+              text: 'Copy📋',
+              onAction: (response) async {
+                ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+                  const SnackBar(content: Text('Copied Successfully')),
+                );
+              },
+            ),
+            //   DioAction(
+            //     text: 'Upload⏫',
+            //     onAction: (response) async {
+            //       ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+            //         const SnackBar(content: Text('Upload Successfully')),
+            //       );
+            //     },
+            //   ),
+          ],
+        ))
         ..register(CustomRouterPluggable())
         ..register(ChannelPlugin());
     }

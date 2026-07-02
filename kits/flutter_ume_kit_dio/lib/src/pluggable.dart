@@ -4,7 +4,7 @@
 ///
 
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart' show Dio;
+import 'package:dio/dio.dart' show Dio, Response;
 import 'package:flutter_ume/core/pluggable.dart';
 
 import 'models/http_interceptor.dart';
@@ -21,13 +21,31 @@ class DioConfig {
   final String tag;
 }
 
+typedef DioItemActionCallback = Future<void> Function(
+    Response<dynamic> response);
+
+/// An action that can be performed on a response card.
+class DioAction {
+  const DioAction({required this.text, required this.onAction});
+
+  /// The button label for this action.
+  final String text;
+
+  /// Callback invoked when the action button is pressed.
+  final DioItemActionCallback onAction;
+}
+
 // TODO(Alex): Implement [PluggableStream] for dot features.
 /// Implement a [Pluggable] to integrate with UME.
 ///
 /// Pass multiple [DioConfig] instances to monitor requests from
 /// different Dio instances, each identified by its [DioConfig.tag].
 class DioInspector extends StatefulWidget implements Pluggable {
-  DioInspector({Key? key, required this.configs}) : super(key: key) {
+  DioInspector({
+    Key? key,
+    required this.configs,
+    this.actions,
+  }) : super(key: key) {
     for (final config in configs) {
       config.dio.interceptors.add(UMEDioInterceptor(tag: config.tag));
     }
@@ -35,6 +53,10 @@ class DioInspector extends StatefulWidget implements Pluggable {
 
   final List<DioConfig> configs;
 
+  /// Optional list of actions shown on each response card.
+  ///
+  /// Replaces the previous single [itemActionText] + [onItemAction] pattern.
+  final List<DioAction>? actions;
   @override
   DioPluggableState createState() => DioPluggableState();
 

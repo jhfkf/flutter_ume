@@ -2,9 +2,11 @@
 /// [Author] Alex (https://github.com/AlexV525)
 /// [Date] 2021/8/6 11:25
 ///
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:dio/dio.dart';
 
 import '../constants/constants.dart';
@@ -95,6 +97,7 @@ class DioPluggableState extends State<DioInspector> {
                 return _ResponseCard(
                   key: ValueKey<int>(r.startTimeMilliseconds),
                   response: r,
+                  actions: widget.actions,
                 );
               },
               childCount: length,
@@ -170,9 +173,11 @@ class _ResponseCard extends StatefulWidget {
   const _ResponseCard({
     required Key? key,
     required this.response,
+    this.actions,
   }) : super(key: key);
 
   final Response<dynamic> response;
+  final List<DioAction>? actions;
 
   @override
   _ResponseCardState createState() => _ResponseCardState();
@@ -286,10 +291,36 @@ class _ResponseCardState extends State<_ResponseCard> {
     );
   }
 
-  Widget _infoContent(BuildContext context) {
-    return Row(
+  Widget _actionButtons(BuildContext context) {
+    final List<DioAction>? actions = widget.actions;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        if (_tag.isNotEmpty) ...[
+        _detailButton(context),
+        if (actions != null)
+          for (final action in actions)
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: TextButton(
+                onPressed: () => action.onAction(_response),
+                style: _buttonStyle(context),
+                child: Text(
+                  action.text,
+                  style: const TextStyle(fontSize: 12, height: 1.2),
+                ),
+              ),
+            ),
+      ],
+    );
+  }
+
+  Widget _infoContent(BuildContext context) {
+    return Wrap(
+      spacing: 6,
+      runSpacing: 6,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: <Widget>[
+        if (_tag.isNotEmpty)
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 4,
@@ -304,10 +335,7 @@ class _ResponseCardState extends State<_ResponseCard> {
               style: const TextStyle(color: Colors.white, fontSize: 11),
             ),
           ),
-          const SizedBox(width: 6),
-        ],
         Text(_startTime.hms()),
-        const SizedBox(width: 6),
         Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 5,
@@ -322,15 +350,35 @@ class _ResponseCardState extends State<_ResponseCard> {
             style: const TextStyle(color: Colors.white, fontSize: 12),
           ),
         ),
-        const SizedBox(width: 6),
         Text(
           _method,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        const SizedBox(width: 6),
         Text('${_duration.inMilliseconds}ms'),
-        const Spacer(),
-        _detailButton(context),
+      ],
+    );
+  }
+
+  Widget _topContent(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _infoContent(context),
+              const SizedBox(height: 10),
+              _TagText(
+                tag: 'Uri',
+                content: '$_requestUri',
+                shouldStartFromNewLine: false,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 8),
+        _actionButtons(context),
       ],
     );
   }
@@ -381,13 +429,7 @@ class _ResponseCardState extends State<_ResponseCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _infoContent(context),
-            const SizedBox(height: 10),
-            _TagText(
-              tag: 'Uri',
-              content: '$_requestUri',
-              shouldStartFromNewLine: false,
-            ),
+            _topContent(context),
             _detailedContent(context),
           ],
         ),
