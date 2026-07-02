@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_ume_kit_dio/flutter_ume_kit_dio.dart';
 import 'package:flutter_ume_kit_channel_monitor/flutter_ume_kit_channel_monitor.dart';
 
-final Dio dio = Dio()..options = BaseOptions(connectTimeout: 10000);
+final Dio dio = Dio()..options = BaseOptions();
 final DioConfig dioConfig = DioConfig(dio: dio, tag: 'Default');
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -66,9 +66,11 @@ class _UMEAppState extends State<UMEApp> {
               },
             ),
           ],
-          onChangeEnv: (String envName) {
+          onChangeEnv: (String envName) async {
             debugPrint('Switch to $envName');
+            return true;
           },
+          currentEnv: 'staging',
         ))
         ..register(WidgetInfoInspector())
         ..register(WidgetDetailInspector())
