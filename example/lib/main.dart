@@ -89,20 +89,16 @@ class _UMEAppState extends State<UMEApp> {
           actions: [
             DioAction(
               text: 'Copy📋',
-              onAction: (response) async {
-                ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
-                  const SnackBar(content: Text('Copied Successfully')),
-                );
+              onTap: (response) async {
+                debugPrint('onTap: ${response.statusCode}');
+              },
+              onDoubleTap: (response) async {
+                debugPrint('onDoubleTap: ${response.statusCode}');
+              },
+              onLongPress: (response) async {
+                debugPrint('onLongPress: ${response.statusCode}');
               },
             ),
-            //   DioAction(
-            //     text: 'Upload⏫',
-            //     onAction: (response) async {
-            //       ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
-            //         const SnackBar(content: Text('Upload Successfully')),
-            //       );
-            //     },
-            //   ),
           ],
         ))
         ..register(CustomRouterPluggable())

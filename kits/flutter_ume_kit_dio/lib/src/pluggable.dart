@@ -25,14 +25,28 @@ typedef DioItemActionCallback = Future<void> Function(
     Response<dynamic> response);
 
 /// An action that can be performed on a response card.
+///
+/// Each [DioAction] renders as a button labeled with [text], and supports
+/// onTap, onDoubleTap, and onLongPress gestures.
 class DioAction {
-  const DioAction({required this.text, required this.onAction});
+  const DioAction({
+    required this.text,
+    this.onTap,
+    this.onDoubleTap,
+    this.onLongPress,
+  });
 
   /// The button label for this action.
   final String text;
 
-  /// Callback invoked when the action button is pressed.
-  final DioItemActionCallback onAction;
+  /// Callback invoked when the action button is tapped.
+  final DioItemActionCallback? onTap;
+
+  /// Callback invoked when the action button is double-tapped.
+  final DioItemActionCallback? onDoubleTap;
+
+  /// Callback invoked when the action button is long-pressed.
+  final DioItemActionCallback? onLongPress;
 }
 
 // TODO(Alex): Implement [PluggableStream] for dot features.
@@ -55,7 +69,7 @@ class DioInspector extends StatefulWidget implements Pluggable {
 
   /// Optional list of actions shown on each response card.
   ///
-  /// Replaces the previous single [itemActionText] + [onItemAction] pattern.
+  /// Each action renders as a button with onTap/onDoubleTap/onLongPress support.
   final List<DioAction>? actions;
   @override
   DioPluggableState createState() => DioPluggableState();

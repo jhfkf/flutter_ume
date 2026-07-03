@@ -301,12 +301,25 @@ class _ResponseCardState extends State<_ResponseCard> {
           for (final action in actions)
             Padding(
               padding: const EdgeInsets.only(top: 6),
-              child: TextButton(
-                onPressed: () => action.onAction(_response),
-                style: _buttonStyle(context),
-                child: Text(
-                  action.text,
-                  style: const TextStyle(fontSize: 12, height: 1.2),
+              child: GestureDetector(
+                onTap: action.onTap != null
+                    ? () => action.onTap!(_response)
+                    : null,
+                onDoubleTap: action.onDoubleTap != null
+                    ? () => action.onDoubleTap!(_response)
+                    : null,
+                onLongPress: action.onLongPress != null
+                    ? () => action.onLongPress!(_response)
+                    : null,
+                child: TextButton(
+                  onPressed: action.onTap != null
+                      ? () => action.onTap!(_response)
+                      : null,
+                  style: _buttonStyle(context),
+                  child: Text(
+                    action.text,
+                    style: const TextStyle(fontSize: 12, height: 1.2),
+                  ),
                 ),
               ),
             ),
