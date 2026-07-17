@@ -1,7 +1,8 @@
 name: flutter_ume_kit_env
 description: env switch
 version: 0.0.1
-homepage:
+publish_to: none
+homepage: https://github.com/bytedance/flutter_ume
 
 environment:
   sdk: ">=3.2.3 <4.0.0"
@@ -11,7 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_ume: any
+  # flutter_ume: any
+  flutter_ume:
+    git:
+      url: https://gitee.com/appkf_admin/flutter_ume.git
+      ref: 3.35.8
 
 dev_dependencies:
   # flutter_test:

@@ -1,6 +1,7 @@
 name: flutter_ume_kit_console
 description: Show debugPrint kit for flutter_ume.
 version: 1.1.0
+publish_to: none
 homepage: https://github.com/bytedance/flutter_ume
 
 environment:
@@ -14,7 +15,11 @@ dependencies:
   # share: ^2.0.4
   share_plus: any
   shared_preferences: any
-  flutter_ume: any
+    # flutter_ume: any
+  flutter_ume:
+    git:
+      url: https://gitee.com/appkf_admin/flutter_ume.git
+      ref: 3.35.8
 
 dev_dependencies:
   flutter_test:
